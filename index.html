@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smoke Cloud Visualization</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>City Smoke Cloud Visualization</h1>
+        <div class="visualization-container">
+            <canvas id="smokeCanvas"></canvas>
+            <div class="controls">
+                <button id="startBtn">Start Simulation</button>
+                <button id="pauseBtn">Pause</button>
+                <button id="resetBtn">Reset</button>
+                <div class="wind-controls">
+                    <label for="windSpeed">Wind Speed: </label>
+                    <input type="range" id="windSpeed" min="0" max="10" value="3">
+                    <span id="windSpeedValue">3</span>
+                </div>
+            </div>
+        </div>
+        <div class="info-panel">
+            <p>Origin: <span id="originCoords">0, 0</span></p>
+            <p>Wind: <span id="windVector">3, 0</span></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.visualization-container {
+    position: relative;
+    margin: 20px auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#smokeCanvas {
+    display: block;
+    width: 100%;
+    height: 600px;
+    background: rgba(10, 15, 30, 0.8);
+}
+
+.controls {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.controls button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: linear-gradient(to bottom, #4a90e2, #357abd);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.controls button:hover {
+    background: linear-gradient(to bottom, #5aa0f0, #458bce);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.controls button:active {
+    transform: translateY(0);
+}
+
+.wind-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wind-controls label {
+    font-size: 0.9rem;
+}
+
+.wind-controls input[type="range"] {
+    width: 150px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.wind-controls input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #4a90e2;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.info-panel {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.info-panel p {
+    margin: 5px 0;
+    font-size: 1.1rem;
+}
+
+.info-panel span {
+    font-weight: bold;
+    color: #4a90e2;
+}
