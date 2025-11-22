@@ -87,14 +87,64 @@ function getSmokeData(timestep) {
         });
 }
 
-getSmokeData(0.1);
-
 // Update particles for rendering
 function updateAndDraw() {
+    // Get smoke data
+    getSmokeData(800).then(data => {
+        if (!data || !data.data || !data.width || !data.height) {
+            console.error('Invalid smoke data structure');
+            return;
+        }
+
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const canvas_ratio = canvas.width / canvas.height;
+        const data_ratio = data.delta_x * data.width / (data.delta_y * data.height);
+
+        let cell_width_px = 0;
+        let cell_height_px = 0;
+
+        if (data_ratio >= canvas_ratio) {
+            cell_height_px = canvas.height / data.height;
+            cell_width_px = cell_height_px * data_ratio;
+        } else {
+            cell_width_px = canvas.width / data.width;
+            cell_height_px = cell_width_px / data_ratio;
+        }
+
+        // Iterate through all smoke data points
+        for (let y = 0; y < data.height; y++) {
+            for (let x = 0; x < data.width; x++) {
+
+                let xpos = x * cell_width_px;
+                let ypos = y * cell_height_px;
+
+                // Set cell color with transparency based on density
+                ctx.fillStyle = `rgba(255, 255, 255, ${data.data[y * data.width + x] * 1000000})`;
+
+                // Draw cell
+                ctx.fillRect(
+                    xpos,
+                    ypos,
+                    cell_width_px,
+                    cell_height_px
+                );
+            }
+        }
+    }).catch(error => {
+        console.error('Error in updateAndDraw:', error);
+    });
 }
+
+updateAndDraw();
 
 // Animation loop
 function animate() {
+    if (!isRunning) return;
+
+    updateAndDraw();
+    animationId = requestAnimationFrame(animate);
 }
 
 // Event listeners
@@ -111,9 +161,13 @@ timeSlider.addEventListener("input", () => {
 
     getSmokeData(t);   // TODO unit
 });
-
 // Initialize
-originCoords.textContent = `${smokeField.smokeSource.x.toFixed(0)}, ${smokeField.smokeSource.y.toFixed(0)}`;
-windVector.textContent = `${windDirection.x.toFixed(2)}, ${windDirection.y.toFixed(2)}`;
-currentTime.textContent = `1 h`;
-
+try {
+    originCoords.textContent = `${smokeField.smokeSource.x.toFixed(0)}, ${smokeField.smokeSource.y.toFixed(0)}`;
+    windVector.textContent = `${windDirection.x.toFixed(2)}, ${windDirection.y.toFixed(2)}`;
+} catch (e) {
+    // If smokeField is not defined, provide default values
+    console.warn('smokeField not defined, using default values');
+    originCoords.textContent = `0, 0`;
+    windVector.textContent = `${windDirection.x.toFixed(2)}, ${windDirection.y.toFixed(2)}`;
+}
