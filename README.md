@@ -42,3 +42,20 @@ The smoke particles are created at a central origin point and have:
 - Natural drift effects
 - Gradual decay and fading
 - Size variation for realism
+
+## Common commands
+Protobuf Python:
+```sh
+protoc smokearray.proto --python_out=.
+```
+
+Protobuf Javascript:
+```sh
+npx pbjs --es6 smokearray_pb2.js smokearray.proto
+```
+
+Run Server:
+```sh
+python server.py
+```
+
