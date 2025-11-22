@@ -41,15 +41,6 @@ from dataclasses import dataclass
 # - $R$: Retardation [–]
 # - $r$: radialer Abstand vom Injektionsbrunnen [m]
 
-######## Next steps
-# TODO temperature added too high
-
-# read input from file
-# test on dataset
-# adaptation to 3D
-# read streamlines
-# coordination transformation
-
 def delta_lahm(x, y, time, parameters, v_a):
     """
     Calculate the temperature difference between the injection well and the point (x, y) at time t.
@@ -96,7 +87,7 @@ def _approx_prop_of_porous_media(prop_water : float, prop_solid : float, n_e : f
 
 @dataclass
 class Parameters:
-    n_e : float = 0.25
+    n_e : float = 0.05
     C_w : float = 4.2e6 # [J/m^3K]
     C_s : float = 2.4e6
     C_m : float = _approx_prop_of_porous_media(C_w, C_s, n_e)
@@ -107,11 +98,11 @@ class Parameters:
     eta : float = 1e-3
     alpha_L : float = 1 #[1,30]
     alpha_T : float = _calc_alpha_T(alpha_L)
-    m_aquifer : float = 5#[5,14]
+    m_aquifer : float = 10#[5,14]
 
     T_gwf : float = 10.6
     T_inj_diff : float = 5
-    q_inj : float = 0.00024 #[m^3/s]
+    q_inj : float = 0.0024 #[m^3/s]
 
     lambda_w : float = 0.65 # [-], source: diss
     lambda_s : float = 1.0 # [-], source: diss
@@ -140,6 +131,3 @@ class Testcase:
             self.v_a = abs(self.v_a)
 
         self.v_a_m_per_day = np.array(np.round(self.v_a*24*60*60, 12))
-
-        # first lahm requirement:
-        # assert self.v_a_m_per_day <= -1, "v_a must be at least 1 m per day to get a valid result"
