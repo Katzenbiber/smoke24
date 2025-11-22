@@ -7,6 +7,7 @@ with dummy data via an API endpoint.
 from flask import Flask, Response, request
 import json
 import smokedata_pb2
+from smoke_model import smoke
 
 app = Flask(__name__)
 
@@ -23,6 +24,7 @@ def get_smokedata():
     smokedata.t = float(timestep)
     smokedata.delta_x = 0.1
     smokedata.delta_y = 0.1
+    smokedata.data.extend(smoke(float(timestep)))
 
     return Response(
         smokedata.SerializeToString(),

@@ -1,4 +1,7 @@
 import numpy as np
+from weather import weather
+from emergency import emergency
+from domain import domain
 
 # # 2D advection-diffusion (explicit)
 # Represents ground-level concentration C(x,y,t) [g/m^3] for an outdoor smoke source Q [g/s].
@@ -107,7 +110,7 @@ def initialize_source_distribution(source_x, source_y, Q, x, y, Nx, Ny, dx, dy, 
 # source term per cell as volumetric source (g/m^3/s) = Q / (cell_area * Hmix)
     cell_area = dx * dy
     S_cell = Q / (cell_area * Hmix)  # g / m^3 / s injected into that cell
-    print(f"Source at grid cell (iy,ix)=({iy},{ix}), S_cell={S_cell:.3e} g/m^3/s")
+    # print(f"Source at grid cell (iy,ix)=({iy},{ix}), S_cell={S_cell:.3e} g/m^3/s")
 
 # Option: distribute source over a small patch
     src_radius_m = 2.0
@@ -140,7 +143,18 @@ def stability_constraints(dx, dy, vx, vy, K, t_final):
     safety = 0.5
     dt = safety * min(dt_adv, dt_diff, 1.0)  # cap to 1 s for sanity
     nt = int(np.ceil(t_final / dt))
-    print(f"dx={dx:.2f} m, dy={dy:.2f} m, dt={dt:.3f} s, nt={nt}, u=({vx:.2f},{vy:.2f}) m/s, K={K} m^2/s")
+    # print(f"dx={dx:.2f} m, dy={dy:.2f} m, dt={dt:.3f} s, nt={nt}, u=({vx:.2f},{vy:.2f}) m/s, K={K} m^2/s")
     return dt, nt
 
-# def smoke():
+def smoke(time_sec:float):
+    vx, vy = weather("constant light breeze") # read weather data (wind velocity, direction, temperature)
+    map, x, y, Lx, Ly, Nx, Ny, dx, dy = domain("data/houses.png", Nx=201, Ny=201) # read domain data (map of the area)
+    # print("Domain size (m): ", Lx, Ly, " Grid points: ", Nx, Ny)
+    emergency_x, emergency_y, Q, Hmix, K = emergency("small fire", 100, 50) # set emergency type and location
+
+    t_final = time_sec +1  # in seconds
+    dt, nt = stability_constraints(dx, dy, vx, vy, K, t_final)
+
+    C, src_mask = initialize_source_distribution(emergency_x, emergency_y, Q, x, y, Nx, Ny, dx, dy, Hmix)
+    snapshots = smoke_concentration(C, save_times=[time_sec,], dt=dt, nt=nt, vx=vx, vy=vy, dx=dx, dy=dy, K=K, src_mask=src_mask)
+    return snapshots[int(np.round(time_sec / dt)) ].flatten().tolist()
