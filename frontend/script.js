@@ -83,18 +83,26 @@ function updateAndDraw() {
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Calculate cell dimensions
-        // const cellWidth = canvas.width / data.width;
-        // const cellHeight = canvas.height / data.height;
+        const canvas_ratio = canvas.width / canvas.height;
+        const data_ratio = data.delta_x * data.width / (data.delta_y * data.height);
 
-        let delta_x = 2;
-        let delta_y = 2;
+        let cell_width_px= 0;
+        let cell_height_px = 0;
+
+        if (data_ratio >= canvas_ratio) {
+            cell_height_px = canvas.height / data.height;
+            cell_width_px = cell_height_px * data_ratio;
+        } else {
+            cell_width_px = canvas.width / data.width;
+            cell_height_px = cell_width_px / data_ratio;
+        }
+
         // Iterate through all smoke data points
         for (let y = 0; y < data.height; y++) {
             for (let x = 0; x < data.width; x++) {
 
-                let xpos = x * delta_x;
-                let ypos = y * delta_y;
+                let xpos = x * cell_width_px;
+                let ypos = y * cell_height_px;
                 
                 // Set cell color with transparency based on density
                 ctx.fillStyle = `rgba(255, 255, 255, ${data.data[y * data.width + x]*1000000})`;
@@ -103,8 +111,8 @@ function updateAndDraw() {
                 ctx.fillRect(
                     xpos, 
                     ypos, 
-                    delta_x, 
-                    delta_y
+                    cell_width_px, 
+                    cell_height_px
                 );
             }
         }
