@@ -20,15 +20,15 @@ def after_request(response):
 # Serve static files
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory('.', 'frontend/index.html')
 
 @app.route('/style.css')
 def style():
-    return send_from_directory('.', 'style.css')
+    return send_from_directory('.', 'frontend/style.css')
 
 @app.route('/script.js')
 def script():
-    return send_from_directory('.', 'script.js')
+    return send_from_directory('.', 'frontend/script.js')
 
 @app.route('/smokedata', methods=['GET'])
 def get_smokedata():
