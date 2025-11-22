@@ -2,8 +2,8 @@ syntax = "proto3";
 
 message SmokeData {
   repeated float data = 1;
-  int32 x = 2;
-  int32 y = 3;
+  int32 width = 2;
+  int32 height = 3;
   float t = 4;
   float delta_x = 5;
   float delta_y = 6;
