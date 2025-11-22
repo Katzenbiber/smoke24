@@ -148,7 +148,7 @@ def stability_constraints(dx, dy, vx, vy, K, t_final):
 
 def smoke(time_sec:float):
     vx, vy = weather("constant light breeze") # read weather data (wind velocity, direction, temperature)
-    map, x, y, Lx, Ly, Nx, Ny, dx, dy = domain("data/houses.png", Nx=201, Ny=201) # read domain data (map of the area)
+    map, x, y, Lx, Ly, Nx, Ny, dx, dy = domain("frontend/data/houses.png", Nx=201, Ny=201) # read domain data (map of the area)
     # print("Domain size (m): ", Lx, Ly, " Grid points: ", Nx, Ny)
     emergency_x, emergency_y, Q, Hmix, K = emergency("small fire", 100, 50) # set emergency type and location
 
