@@ -4,7 +4,7 @@ Simple Flask web server that serves SmokeData protobuf message
 with dummy data via an API endpoint.
 """
 
-from flask import Flask, Response
+from flask import Flask, Response, request
 import json
 import smokedata_pb2
 
@@ -14,11 +14,13 @@ app = Flask(__name__)
 def get_smokedata():
     """API endpoint that returns SmokeData message as protobuf"""
     # Dummy data matching the protobuf structure
+    timestep = request.args.get('timestep')
+
     smokedata = smokedata_pb2.SmokeData()
     smokedata.data.extend([ 0, 1, 2, 3, 4, 5])
     smokedata.width = 3
     smokedata.height = 2
-    smokedata.t = 0.1
+    smokedata.t = float(timestep)
     smokedata.delta_x = 0.1
     smokedata.delta_y = 0.1
 
