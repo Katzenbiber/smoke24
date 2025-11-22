@@ -17,7 +17,7 @@ h1 {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 20px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .visualization-container {
@@ -25,7 +25,7 @@ h1 {
     margin: 20px auto;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     background: rgba(0, 0, 0, 0.2);
 }
 
@@ -55,30 +55,30 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .controls button:hover {
     background: linear-gradient(to bottom, #5aa0f0, #458bce);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .controls button:active {
     transform: translateY(0);
 }
 
-.wind-controls {
+.time-controls {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.wind-controls label {
+.time-controls label {
     font-size: 0.9rem;
 }
 
-.wind-controls input[type="range"] {
+.time-controls input[type="range"] {
     width: 150px;
     height: 5px;
     background: rgba(255, 255, 255, 0.2);
@@ -87,14 +87,14 @@ h1 {
     -webkit-appearance: none;
 }
 
-.wind-controls input[type="range"]::-webkit-slider-thumb {
+.time-controls input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 18px;
     height: 18px;
     border-radius: 50%;
     background: #4a90e2;
     cursor: pointer;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .info-panel {
