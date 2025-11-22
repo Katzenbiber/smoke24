@@ -30,6 +30,10 @@ def style():
 def script():
     return send_from_directory('.', 'frontend/script.js')
 
+@app.route('/modules/smokedata_pb2.js')
+def smokedata():
+    return send_from_directory('.', 'frontend/modules/smokedata_pb2.js')
+
 @app.route('/smokedata', methods=['GET'])
 def get_smokedata():
     """API endpoint that returns SmokeData message as protobuf"""

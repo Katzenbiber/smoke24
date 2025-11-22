@@ -1,3 +1,5 @@
+import { decodeSmokeData } from './modules/smokedata_pb2.js'
+
 // Smoke Cloud Visualization with Diffusion Field
 const canvas = document.getElementById('smokeCanvas');
 const ctx = canvas.getContext('2d');

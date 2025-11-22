@@ -51,7 +51,7 @@ protoc smokedata.proto --python_out=.
 
 Protobuf Javascript:
 ```sh
-npx pbjs --es6 smokedata_pb2.js smokedata.proto
+npx pbjs --es6 frontend/modules/smokedata_pb2.js smokedata.proto
 ```
 
 Run Server:
