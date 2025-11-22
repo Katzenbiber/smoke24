@@ -16,7 +16,7 @@
           buildInputs = [
             pkgs.protobuf
             pkgs.nodejs
-            (pkgs.python312.withPackages (pp: with pp; [ flask protobuf ]))
+            (pkgs.python312.withPackages (pp: with pp; [ flask protobuf numpy matplotlib ]))
           ];
         };
       });
