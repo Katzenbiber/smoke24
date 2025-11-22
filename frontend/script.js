@@ -71,14 +71,56 @@ function getSmokeData(timestep) {
         });
 }
 
-getSmokeData(0.1);
-
 // Update particles for rendering
 function updateAndDraw() {
+    // Get smoke data
+    getSmokeData(800).then(data => {
+        if (!data || !data.data || !data.width || !data.height) {
+            console.error('Invalid smoke data structure');
+            return;
+        }
+
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Calculate cell dimensions
+        // const cellWidth = canvas.width / data.width;
+        // const cellHeight = canvas.height / data.height;
+
+        let delta_x = 2;
+        let delta_y = 2;
+        // Iterate through all smoke data points
+        for (let y = 0; y < data.height; y++) {
+            for (let x = 0; x < data.width; x++) {
+
+                let xpos = x * delta_x;
+                let ypos = y * delta_y;
+                
+                // Set cell color with transparency based on density
+                ctx.fillStyle = `rgba(255, 255, 255, ${data.data[y * data.width + x]*1000000})`;
+                
+                // Draw cell
+                ctx.fillRect(
+                    xpos, 
+                    ypos, 
+                    delta_x, 
+                    delta_y
+                );
+            }
+        }
+    }).catch(error => {
+        console.error('Error in updateAndDraw:', error);
+    });
 }
+
+updateAndDraw();
 
 // Animation loop
 function animate() {
+    if (!isRunning) return;
+    
+    updateAndDraw();
+    animationId = requestAnimationFrame(animate);
 }
 
 // Event listeners
@@ -104,6 +146,19 @@ resetBtn.addEventListener('click', () => {
     smokeField.reset();
 });
 
+// Wind speed slider
+windSpeedSlider.addEventListener('input', () => {
+    windSpeed = windSpeedSlider.value;
+    windSpeedValue.textContent = windSpeed;
+});
+
 // Initialize
-originCoords.textContent = `${smokeField.smokeSource.x.toFixed(0)}, ${smokeField.smokeSource.y.toFixed(0)}`;
-windVector.textContent = `${windDirection.x.toFixed(2)}, ${windDirection.y.toFixed(2)}`;
+try {
+    originCoords.textContent = `${smokeField.smokeSource.x.toFixed(0)}, ${smokeField.smokeSource.y.toFixed(0)}`;
+    windVector.textContent = `${windDirection.x.toFixed(2)}, ${windDirection.y.toFixed(2)}`;
+} catch (e) {
+    // If smokeField is not defined, provide default values
+    console.warn('smokeField not defined, using default values');
+    originCoords.textContent = `0, 0`;
+    windVector.textContent = `${windDirection.x.toFixed(2)}, ${windDirection.y.toFixed(2)}`;
+}
