@@ -157,4 +157,6 @@ def smoke(time_sec:float):
 
     C, src_mask = initialize_source_distribution(emergency_x, emergency_y, Q, x, y, Nx, Ny, dx, dy, Hmix)
     snapshots = smoke_concentration(C, save_times=[time_sec,], dt=dt, nt=nt, vx=vx, vy=vy, dx=dx, dy=dy, K=K, src_mask=src_mask)
-    return snapshots[int(np.round(time_sec / dt)) ].flatten().tolist()
+    return {"Nx" : Nx, "Ny" : Ny,
+            "dx" : dx, "dy" : dy,
+            "data" : snapshots[int(np.round(time_sec / dt)) ].flatten().tolist()}

@@ -16,15 +16,14 @@ def get_smokedata():
     """API endpoint that returns SmokeData message as protobuf"""
     # Dummy data matching the protobuf structure
     timestep = request.args.get('timestep')
-
+    output = smoke(float(timestep))
     smokedata = smokedata_pb2.SmokeData()
-    smokedata.data.extend([ 0, 1, 2, 3, 4, 5])
-    smokedata.width = 3
-    smokedata.height = 2
     smokedata.t = float(timestep)
-    smokedata.delta_x = 0.1
-    smokedata.delta_y = 0.1
-    smokedata.data.extend(smoke(float(timestep)))
+    smokedata.width = output["Nx"]
+    smokedata.height = output["Ny"]
+    smokedata.delta_x = output["dx"]
+    smokedata.delta_y = output["dy"]
+    smokedata.data.extend(output["data"])
 
     return Response(
         smokedata.SerializeToString(),
