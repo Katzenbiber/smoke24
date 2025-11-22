@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+message SmokeData {
+  repeated float data = 1;
+  int32 dim1 = 2;
+  int32 dim2 = 3;
+  int32 dim3 = 4;
+}
