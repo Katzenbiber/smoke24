@@ -99,6 +99,9 @@ function updateAndDraw() {
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        // Redraw the background image
+        ctx.drawImage(img, 0, 0);
+
         const canvas_ratio = canvas.width / canvas.height;
         const data_ratio = data.delta_x * data.width / (data.delta_y * data.height);
 
@@ -121,7 +124,7 @@ function updateAndDraw() {
                 let ypos = y * cell_height_px;
 
                 // Set cell color with transparency based on density
-                ctx.fillStyle = `rgba(255, 255, 255, ${data.data[y * data.width + x] * 1000000})`;
+                ctx.fillStyle = `rgba(255, 0, 0, ${data.data[y * data.width + x] * 1000000})`;
 
                 // Draw cell
                 ctx.fillRect(
