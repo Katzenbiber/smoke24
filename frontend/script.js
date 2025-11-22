@@ -29,15 +29,6 @@ let windDirection = { x: 1, y: 0 }; // Wind direction (normalized)
 const img = new Image();
 img.src = "frontend/data/houses.png";   // your picture
 
-img.onload = () => {
-    // adjust canvas to image size
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    // draw the picture
-    ctx.drawImage(img, 0, 0);
-};
-
 function updateDebugTable(data) {
     const tbody = debugTable.querySelector('tbody');
     tbody.innerHTML = '';
@@ -99,9 +90,6 @@ function updateAndDraw() {
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Redraw the background image
-        ctx.drawImage(img, 0, 0);
-
         const canvas_ratio = canvas.width / canvas.height;
         const data_ratio = data.delta_x * data.width / (data.delta_y * data.height);
 
@@ -109,11 +97,19 @@ function updateAndDraw() {
         let cell_height_px = 0;
 
         if (data_ratio >= canvas_ratio) {
+            // Data is wider than canvas, add black bars on top/bottom
             cell_height_px = canvas.height / data.height;
             cell_width_px = cell_height_px * data_ratio;
+
+            // Redraw the background image
+            ctx.drawImage(img, 0, 0, canvas.width, img.height / data_ratio);
         } else {
+            // Data is taller than canvas, add black bars on left/right
             cell_width_px = canvas.width / data.width;
             cell_height_px = cell_width_px / data_ratio;
+
+            // Redraw the background image
+            ctx.drawImage(img, 0, 0, img.width / data_ratio, canvas.height);
         }
 
         // Iterate through all smoke data points
