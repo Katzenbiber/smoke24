@@ -1,3 +1,4 @@
 *pb2.*
 .direnv/
 .envrc
+node_modules/
