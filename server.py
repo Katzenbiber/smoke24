@@ -7,7 +7,7 @@ from flask import Flask, Response, request, send_from_directory
 import smokedata_pb2
 from smoke_model import smoke
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="frontend")
 
 # Enable CORS for all routes
 @app.after_request
@@ -20,19 +20,11 @@ def after_request(response):
 # Serve static files
 @app.route('/')
 def index():
-    return send_from_directory('.', 'frontend/index.html')
+    return send_from_directory('frontend', 'index.html')
 
-@app.route('/style.css')
-def style():
-    return send_from_directory('.', 'frontend/style.css')
-
-@app.route('/script.js')
-def script():
-    return send_from_directory('.', 'frontend/script.js')
-
-@app.route('/modules/smokedata_pb2.js')
-def smokedata():
-    return send_from_directory('.', 'frontend/modules/smokedata_pb2.js')
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('frontend', 'favicon.ico')
 
 @app.route('/smokedata', methods=['GET'])
 def get_smokedata():
