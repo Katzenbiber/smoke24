@@ -46,12 +46,12 @@ The smoke particles are created at a central origin point and have:
 ## Common commands
 Protobuf Python:
 ```sh
-protoc smokearray.proto --python_out=.
+protoc smokedata.proto --python_out=.
 ```
 
 Protobuf Javascript:
 ```sh
-npx pbjs --es6 smokearray_pb2.js smokearray.proto
+npx pbjs --es6 smokedata_pb2.js smokedata.proto
 ```
 
 Run Server:
