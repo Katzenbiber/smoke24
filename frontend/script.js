@@ -78,6 +78,22 @@ function getSmokeData(timestep) {
         });
 }
 
+canvas.addEventListener("click", (event) => {
+    // Get bounding rectangle of canvas
+    const rect = canvas.getBoundingClientRect();
+
+    // Mouse position relative to top-left of canvas
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    // Normalize to 0..1 (relative coordinates)
+    const relX = x / canvas.width;
+    const relY = y / canvas.height;
+
+    // relX=0 → left, relX=1 → right
+    // relY=0 → top, relY=1 → bottom
+});
+
 // Update particles for rendering
 function updateAndDraw() {
     // Get smoke data
